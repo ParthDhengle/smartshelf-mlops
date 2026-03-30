@@ -1,0 +1,9 @@
+.env
+venv/
+mlflow_artifacts/
+data/raw/*.csv
+__pycache__/
+*.pyc
+.DS_Store
+*.egg-info/
+.pytest_cache/

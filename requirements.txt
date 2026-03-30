@@ -1,0 +1,40 @@
+# Core ML
+pandas
+numpy
+scikit-learn
+xgboost
+lightgbm
+
+# MLflow
+mlflow
+
+# API
+fastapi
+uvicorn[standard]
+pydantic
+
+# Data validation & drift
+evidently
+great-expectations
+
+# Monitoring
+prometheus-client
+
+# Scheduling / automation
+apscheduler
+
+# Data & utilities
+kaggle
+python-dotenv
+joblib
+requests
+
+# Testing
+pytest
+httpx
+
+# Notebook
+jupyter
+matplotlib
+seaborn
+plotly
