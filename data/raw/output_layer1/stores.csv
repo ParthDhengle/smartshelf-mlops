@@ -1,0 +1,26 @@
+store_id,store_name,city,state,store_type,store_size_sqft,lat,lon
+1,FreshMart Kothrud,Pune,Maharashtra,Supermarket,8500,18.5074,73.8077
+2,FreshMart Wakad,Pune,Maharashtra,Supermarket,7200,18.5981,73.7706
+3,FreshMart Hadapsar,Pune,Maharashtra,Hypermarket,14000,18.5018,73.926
+4,FreshMart Baner,Pune,Maharashtra,Supermarket,6800,18.559,73.7868
+5,FreshMart Shivajinagar,Pune,Maharashtra,Convenience,3200,18.5308,73.8474
+6,FreshMart Andheri West,Mumbai,Maharashtra,Supermarket,9000,19.1316,72.8272
+7,FreshMart Malad,Mumbai,Maharashtra,Hypermarket,15000,19.1874,72.8484
+8,FreshMart Thane,Thane,Maharashtra,Supermarket,8200,19.2183,72.9781
+9,FreshMart Navi Mumbai,Navi Mumbai,Maharashtra,Supermarket,7800,19.033,73.0297
+10,FreshMart Borivali,Mumbai,Maharashtra,Supermarket,7500,19.2307,72.8567
+11,FreshMart Nashik Central,Nashik,Maharashtra,Hypermarket,12000,19.9975,73.7898
+12,FreshMart Nashik Rd,Nashik,Maharashtra,Supermarket,6500,19.9756,73.8356
+13,FreshMart Nagpur Sitabuldi,Nagpur,Maharashtra,Hypermarket,13000,21.1458,79.0882
+14,FreshMart Nagpur Dharampeth,Nagpur,Maharashtra,Supermarket,7000,21.129,79.0627
+15,FreshMart Aurangabad,Aurangabad,Maharashtra,Supermarket,7600,19.8762,75.3433
+16,FreshMart Kolhapur,Kolhapur,Maharashtra,Supermarket,6900,16.705,74.2433
+17,FreshMart Solapur,Solapur,Maharashtra,Supermarket,6200,17.6868,75.9064
+18,FreshMart Nanded,Nanded,Maharashtra,Convenience,3800,19.1383,77.321
+19,FreshMart Amravati,Amravati,Maharashtra,Convenience,3500,20.9374,77.7796
+20,FreshMart Satara,Satara,Maharashtra,Convenience,2900,17.6805,73.9954
+21,FreshMart Sangli,Sangli,Maharashtra,Supermarket,5800,16.8524,74.5815
+22,FreshMart Latur,Latur,Maharashtra,Convenience,3100,18.4088,76.5604
+23,FreshMart Jalgaon,Jalgaon,Maharashtra,Supermarket,5200,21.0077,75.5626
+24,FreshMart Akola,Akola,Maharashtra,Convenience,2800,20.7002,77.0082
+25,FreshMart Ahmednagar,Ahmednagar,Maharashtra,Supermarket,5500,19.0952,74.748

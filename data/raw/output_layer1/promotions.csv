@@ -1,0 +1,73 @@
+promotion_id,promo_name,promo_type,discount_pct,min_qty,start_date,end_date
+1,Diwali Dhamaka Sale 2021,Festival,0.2,1,2021-10-08,2021-10-18
+2,Holi Rang Offers 2021,Festival,0.15,1,2021-02-09,2021-02-16
+3,Ganesh Utsav Special 2021,Festival,0.12,1,2021-08-16,2021-08-21
+4,Navratri Fasting Deals 2021,Festival,0.18,1,2021-09-03,2021-09-12
+5,Republic Day Sale 2021,National,0.1,1,2021-01-09,2021-01-12
+6,Independence Day Sale 2021,National,0.1,1,2021-08-03,2021-08-06
+7,Weekend Bonanza 2021,Weekend,0.08,2,2021-01-15,2021-01-17
+8,Buy 2 Get 10% Off 2021,Bundle,0.1,2,2021-01-13,2021-02-12
+9,Month-End Clearance 2021,Clearance,0.15,1,2021-01-10,2021-01-15
+10,New Year Celebration 2021,Festival,0.18,1,2021-12-08,2021-12-13
+11,Summer Cool Drinks Sale 2021,Seasonal,0.12,2,2021-04-03,2021-05-18
+12,Monsoon Snacks Fiesta 2021,Seasonal,0.08,2,2021-07-18,2021-08-17
+13,Winter Wellness Sale 2021,Seasonal,0.1,1,2021-11-13,2021-12-13
+14,Fresh Produce Tuesday 2021,Loyalty,0.1,1,2021-01-07,2021-01-08
+15,Double Points Weekend 2021,Loyalty,0.05,1,2021-01-08,2021-01-10
+16,Eid Mubarak Special 2021,Festival,0.15,1,2021-03-14,2021-03-19
+17,Christmas & New Year Deal 2021,Festival,0.15,1,2021-12-14,2021-12-24
+18,Raksha Bandhan Sweets Sale 2021,Festival,0.12,1,2021-07-09,2021-07-14
+19,Diwali Dhamaka Sale 2022,Festival,0.2,1,2022-10-06,2022-10-16
+20,Holi Rang Offers 2022,Festival,0.15,1,2022-02-13,2022-02-20
+21,Ganesh Utsav Special 2022,Festival,0.12,1,2022-08-13,2022-08-18
+22,Navratri Fasting Deals 2022,Festival,0.18,1,2022-09-12,2022-09-21
+23,Republic Day Sale 2022,National,0.1,1,2022-01-02,2022-01-05
+24,Independence Day Sale 2022,National,0.1,1,2022-08-09,2022-08-12
+25,Weekend Bonanza 2022,Weekend,0.08,2,2022-01-12,2022-01-14
+26,Buy 2 Get 10% Off 2022,Bundle,0.1,2,2022-01-19,2022-02-18
+27,Month-End Clearance 2022,Clearance,0.15,1,2022-01-10,2022-01-15
+28,New Year Celebration 2022,Festival,0.18,1,2022-12-07,2022-12-12
+29,Summer Cool Drinks Sale 2022,Seasonal,0.12,2,2022-04-11,2022-05-26
+30,Monsoon Snacks Fiesta 2022,Seasonal,0.08,2,2022-07-04,2022-08-03
+31,Winter Wellness Sale 2022,Seasonal,0.1,1,2022-11-02,2022-12-02
+32,Fresh Produce Tuesday 2022,Loyalty,0.1,1,2022-01-13,2022-01-14
+33,Double Points Weekend 2022,Loyalty,0.05,1,2022-01-19,2022-01-21
+34,Eid Mubarak Special 2022,Festival,0.15,1,2022-03-17,2022-03-22
+35,Christmas & New Year Deal 2022,Festival,0.15,1,2022-12-12,2022-12-22
+36,Raksha Bandhan Sweets Sale 2022,Festival,0.12,1,2022-07-01,2022-07-06
+37,Diwali Dhamaka Sale 2023,Festival,0.2,1,2023-10-19,2023-10-29
+38,Holi Rang Offers 2023,Festival,0.15,1,2023-02-09,2023-02-16
+39,Ganesh Utsav Special 2023,Festival,0.12,1,2023-08-06,2023-08-11
+40,Navratri Fasting Deals 2023,Festival,0.18,1,2023-09-17,2023-09-26
+41,Republic Day Sale 2023,National,0.1,1,2023-01-15,2023-01-18
+42,Independence Day Sale 2023,National,0.1,1,2023-08-15,2023-08-18
+43,Weekend Bonanza 2023,Weekend,0.08,2,2023-01-06,2023-01-08
+44,Buy 2 Get 10% Off 2023,Bundle,0.1,2,2023-01-19,2023-02-18
+45,Month-End Clearance 2023,Clearance,0.15,1,2023-01-09,2023-01-14
+46,New Year Celebration 2023,Festival,0.18,1,2023-12-11,2023-12-16
+47,Summer Cool Drinks Sale 2023,Seasonal,0.12,2,2023-04-15,2023-05-30
+48,Monsoon Snacks Fiesta 2023,Seasonal,0.08,2,2023-07-13,2023-08-12
+49,Winter Wellness Sale 2023,Seasonal,0.1,1,2023-11-04,2023-12-04
+50,Fresh Produce Tuesday 2023,Loyalty,0.1,1,2023-01-06,2023-01-07
+51,Double Points Weekend 2023,Loyalty,0.05,1,2023-01-07,2023-01-09
+52,Eid Mubarak Special 2023,Festival,0.15,1,2023-03-19,2023-03-24
+53,Christmas & New Year Deal 2023,Festival,0.15,1,2023-12-14,2023-12-24
+54,Raksha Bandhan Sweets Sale 2023,Festival,0.12,1,2023-07-07,2023-07-12
+55,Diwali Dhamaka Sale 2024,Festival,0.2,1,2024-10-14,2024-10-24
+56,Holi Rang Offers 2024,Festival,0.15,1,2024-02-15,2024-02-22
+57,Ganesh Utsav Special 2024,Festival,0.12,1,2024-08-08,2024-08-13
+58,Navratri Fasting Deals 2024,Festival,0.18,1,2024-09-08,2024-09-17
+59,Republic Day Sale 2024,National,0.1,1,2024-01-17,2024-01-20
+60,Independence Day Sale 2024,National,0.1,1,2024-08-11,2024-08-14
+61,Weekend Bonanza 2024,Weekend,0.08,2,2024-01-03,2024-01-05
+62,Buy 2 Get 10% Off 2024,Bundle,0.1,2,2024-01-14,2024-02-13
+63,Month-End Clearance 2024,Clearance,0.15,1,2024-01-12,2024-01-17
+64,New Year Celebration 2024,Festival,0.18,1,2024-12-10,2024-12-15
+65,Summer Cool Drinks Sale 2024,Seasonal,0.12,2,2024-04-14,2024-05-29
+66,Monsoon Snacks Fiesta 2024,Seasonal,0.08,2,2024-07-18,2024-08-17
+67,Winter Wellness Sale 2024,Seasonal,0.1,1,2024-11-07,2024-12-07
+68,Fresh Produce Tuesday 2024,Loyalty,0.1,1,2024-01-08,2024-01-09
+69,Double Points Weekend 2024,Loyalty,0.05,1,2024-01-04,2024-01-06
+70,Eid Mubarak Special 2024,Festival,0.15,1,2024-03-13,2024-03-18
+71,Christmas & New Year Deal 2024,Festival,0.15,1,2024-12-08,2024-12-18
+72,Raksha Bandhan Sweets Sale 2024,Festival,0.12,1,2024-07-07,2024-07-12

@@ -1,0 +1,8 @@
+supplier_id,supplier_name,city,lat,lon,lead_time_days,delivery_cost,reliability_score
+1,Pune Agro Distributors Pvt Ltd,Pune,18.5204,73.8567,2,850.0,0.97
+2,Mumbai Fresh Foods Wholesale Co,Mumbai,19.076,72.8777,3,1200.0,0.94
+3,Nashik Valley Produce & FMCG Suppliers,Nashik,19.9975,73.7898,4,980.0,0.91
+4,Nagpur Central Grocery Distributors,Nagpur,21.1458,79.0882,5,1450.0,0.88
+5,Kolhapur Dairy & Staples Wholesale,Kolhapur,16.705,74.2433,3,900.0,0.93
+6,Aurangabad FMCG Mega Distributors,Aurangabad,19.8762,75.3433,4,1100.0,0.89
+7,Solapur Dry Goods & Spices Co,Solapur,17.6868,75.9064,3,870.0,0.92

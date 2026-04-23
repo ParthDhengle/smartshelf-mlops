@@ -1,0 +1,190 @@
+product_id,category_id,product_name,brand,unit_size,perishable,shelf_life_days,base_cost_price,base_sell_price,gross_margin,created_at
+1,14,Alphonso Mango 1kg,Local Farm,1kg,True,5,60,80,0.2,2021-01-01 00:00:00
+2,14,Banana (Elaichi) 1 doz,Local Farm,12 pcs,True,4,30,40,0.2,2021-01-01 00:00:00
+3,14,Pomegranate 500g,Local Farm,500g,True,7,55,75,0.22,2021-01-01 00:00:00
+4,14,Apple Shimla 1kg,Imported,1kg,True,10,120,160,0.18,2021-01-01 00:00:00
+5,14,Papaya 1kg,Local Farm,1kg,True,4,28,38,0.2,2021-01-01 00:00:00
+6,14,Watermelon (per piece),Local Farm,3-4kg,True,5,55,70,0.2,2021-01-01 00:00:00
+7,14,Grapes (Green) 500g,Nashik Farm,500g,True,6,45,60,0.2,2021-01-01 00:00:00
+8,15,Tomato 1kg,Local Farm,1kg,True,3,20,30,0.25,2021-01-01 00:00:00
+9,15,Onion 1kg,Local Farm,1kg,True,14,22,32,0.22,2021-01-01 00:00:00
+10,15,Potato 1kg,Local Farm,1kg,True,21,18,28,0.22,2021-01-01 00:00:00
+11,15,Cauliflower (per piece),Local Farm,1 pc,True,5,25,35,0.22,2021-01-01 00:00:00
+12,15,Cabbage (per piece),Local Farm,1 pc,True,7,18,26,0.22,2021-01-01 00:00:00
+13,15,Carrot 500g,Local Farm,500g,True,7,20,28,0.22,2021-01-01 00:00:00
+14,15,Bhindi (Okra) 500g,Local Farm,500g,True,3,18,26,0.22,2021-01-01 00:00:00
+15,15,Green Peas 500g,Local Farm,500g,True,4,28,38,0.22,2021-01-01 00:00:00
+16,15,Brinjal 500g,Local Farm,500g,True,5,15,22,0.22,2021-01-01 00:00:00
+17,16,Coriander Bunch,Local Farm,1 bunch,True,2,8,12,0.25,2021-01-01 00:00:00
+18,16,Methi (Fenugreek) Bunch,Local Farm,1 bunch,True,2,10,15,0.25,2021-01-01 00:00:00
+19,16,Spinach 250g,Local Farm,250g,True,2,12,18,0.25,2021-01-01 00:00:00
+20,16,Mint Bunch,Local Farm,1 bunch,True,2,8,12,0.25,2021-01-01 00:00:00
+21,17,Broccoli 500g,Imported,500g,True,5,65,90,0.2,2021-01-01 00:00:00
+22,17,Zucchini 500g,Imported,500g,True,7,55,75,0.2,2021-01-01 00:00:00
+23,17,Baby Corn 200g,Local Farm,200g,True,5,35,50,0.22,2021-01-01 00:00:00
+24,18,Amul Milk Full Cream 1L,Amul,1L,True,2,54,64,0.1,2021-01-01 00:00:00
+25,18,Amul Toned Milk 1L,Amul,1L,True,2,48,58,0.1,2021-01-01 00:00:00
+26,18,Mother Dairy Milk 500ml,Mother Dairy,500ml,True,2,27,32,0.1,2021-01-01 00:00:00
+27,18,Amul Lassi 200ml,Amul,200ml,False,15,18,22,0.1,2021-01-01 00:00:00
+28,19,Amul Dahi 400g,Amul,400g,True,7,38,46,0.12,2021-01-01 00:00:00
+29,19,Mother Dairy Mishti Doi 100g,Mother Dairy,100g,True,5,22,28,0.15,2021-01-01 00:00:00
+30,19,Nestle Actiplus Curd 400g,Nestle,400g,True,7,42,52,0.12,2021-01-01 00:00:00
+31,20,Amul Paneer 200g,Amul,200g,True,7,72,90,0.15,2021-01-01 00:00:00
+32,20,Amul Cheese Slices 200g,Amul,200g,False,90,95,120,0.15,2021-01-01 00:00:00
+33,20,Go Cheese Cheddar 200g,Parag,200g,False,90,110,140,0.15,2021-01-01 00:00:00
+34,21,Amul Butter Salted 100g,Amul,100g,False,120,48,58,0.12,2021-01-01 00:00:00
+35,21,Amul Pure Ghee 500ml,Amul,500ml,False,180,285,340,0.12,2021-01-01 00:00:00
+36,21,Mother Dairy Ghee 1L,Mother Dairy,1L,False,180,555,660,0.12,2021-01-01 00:00:00
+37,21,Milkfood Butter Unsalted 100g,Milkfood,100g,False,120,45,55,0.12,2021-01-01 00:00:00
+38,22,Eggs White (6 pcs),Local Poultry,6 pcs,True,10,42,54,0.15,2021-01-01 00:00:00
+39,22,Eggs White (12 pcs),Local Poultry,12 pcs,True,10,82,105,0.15,2021-01-01 00:00:00
+40,22,Brown Eggs (6 pcs),Organic Farm,6 pcs,True,10,58,75,0.15,2021-01-01 00:00:00
+41,23,India Gate Basmati Rice 5kg,India Gate,5kg,False,365,420,520,0.12,2021-01-01 00:00:00
+42,23,Daawat Basmati Rice 1kg,Daawat,1kg,False,365,88,110,0.12,2021-01-01 00:00:00
+43,23,Kolam Rice 5kg,Local Brand,5kg,False,365,175,220,0.12,2021-01-01 00:00:00
+44,23,Sona Masoori Rice 5kg,Local Brand,5kg,False,365,220,270,0.12,2021-01-01 00:00:00
+45,24,Toor Dal 1kg,Local Brand,1kg,False,365,110,135,0.12,2021-01-01 00:00:00
+46,24,Chana Dal 1kg,Local Brand,1kg,False,365,90,112,0.12,2021-01-01 00:00:00
+47,24,Moong Dal 500g,Local Brand,500g,False,365,55,70,0.12,2021-01-01 00:00:00
+48,24,Rajma (Kidney Beans) 500g,Catch,500g,False,365,65,82,0.12,2021-01-01 00:00:00
+49,24,Masoor Dal 1kg,Local Brand,1kg,False,365,95,120,0.12,2021-01-01 00:00:00
+50,24,Urad Dal 500g,Local Brand,500g,False,365,60,76,0.12,2021-01-01 00:00:00
+51,25,Aashirvaad Atta 5kg,ITC,5kg,False,180,210,265,0.12,2021-01-01 00:00:00
+52,25,Pillsbury Maida 1kg,Pillsbury,1kg,False,180,42,55,0.12,2021-01-01 00:00:00
+53,25,Rajdhani Besan 500g,Rajdhani,500g,False,180,52,68,0.12,2021-01-01 00:00:00
+54,25,Shakti Bhog Atta 10kg,Shakti Bhog,10kg,False,180,380,480,0.12,2021-01-01 00:00:00
+55,25,Sooji (Semolina) 500g,Local Brand,500g,False,180,28,36,0.12,2021-01-01 00:00:00
+56,26,MDH Chana Masala 100g,MDH,100g,False,365,48,62,0.18,2021-01-01 00:00:00
+57,26,Everest Rajma Masala 100g,Everest,100g,False,365,45,58,0.18,2021-01-01 00:00:00
+58,26,Catch Turmeric Powder 200g,Catch,200g,False,365,38,50,0.18,2021-01-01 00:00:00
+59,26,MDH Garam Masala 100g,MDH,100g,False,365,55,72,0.18,2021-01-01 00:00:00
+60,26,Everest Kitchen King 100g,Everest,100g,False,365,52,68,0.18,2021-01-01 00:00:00
+61,26,Badshah Pav Bhaji Masala 100g,Badshah,100g,False,365,45,58,0.18,2021-01-01 00:00:00
+62,26,Tata Sampann Red Chilli 200g,Tata,200g,False,365,72,95,0.18,2021-01-01 00:00:00
+63,27,Fortune Sunflower Oil 1L,Fortune,1L,False,365,128,160,0.15,2021-01-01 00:00:00
+64,27,Saffola Gold Oil 1L,Saffola,1L,False,365,148,185,0.15,2021-01-01 00:00:00
+65,27,Patanjali Mustard Oil 1L,Patanjali,1L,False,365,112,140,0.15,2021-01-01 00:00:00
+66,27,Dhara Refined Oil 5L,Dhara,5L,False,365,590,740,0.15,2021-01-01 00:00:00
+67,28,Tata Salt 1kg,Tata,1kg,False,365,20,26,0.1,2021-01-01 00:00:00
+68,28,Uttam Sugar 1kg,Uttam,1kg,False,365,42,52,0.1,2021-01-01 00:00:00
+69,28,Patanjali Desi Khand 1kg,Patanjali,1kg,False,365,55,70,0.15,2021-01-01 00:00:00
+70,28,Organic Jaggery (Gud) 500g,Local Brand,500g,False,365,38,50,0.18,2021-01-01 00:00:00
+71,29,Cashew (Kaju) 250g,Local Brand,250g,False,180,195,260,0.2,2021-01-01 00:00:00
+72,29,Almonds (Badam) 250g,Local Brand,250g,False,180,215,285,0.2,2021-01-01 00:00:00
+73,29,Raisins (Kishmish) 200g,Local Brand,200g,False,180,75,100,0.2,2021-01-01 00:00:00
+74,29,Walnuts 250g,Local Brand,250g,False,180,185,250,0.2,2021-01-01 00:00:00
+75,29,Mixed Dry Fruits 250g,Happilo,250g,False,180,210,280,0.2,2021-01-01 00:00:00
+76,30,Heinz Ketchup 500g,Heinz,500g,False,365,85,110,0.18,2021-01-01 00:00:00
+77,30,Kitchens of India Curry 285g,ITC,285g,False,365,115,145,0.18,2021-01-01 00:00:00
+78,30,Tasty Treat Corn 400g,Future Group,400g,False,365,55,72,0.18,2021-01-01 00:00:00
+79,31,Haldiram's Aloo Bhujia 400g,Haldiram's,400g,False,120,78,100,0.2,2021-01-01 00:00:00
+80,31,Haldiram's Moong Dal 200g,Haldiram's,200g,False,120,38,50,0.2,2021-01-01 00:00:00
+81,31,Bikaji Navratan Mix 400g,Bikaji,400g,False,120,72,95,0.2,2021-01-01 00:00:00
+82,31,Balaji Wafers Namkeen 200g,Balaji,200g,False,90,28,38,0.22,2021-01-01 00:00:00
+83,31,Haldiram's Sev 150g,Haldiram's,150g,False,120,28,38,0.2,2021-01-01 00:00:00
+84,32,Lays Classic Salted 52g,PepsiCo,52g,False,90,15,20,0.2,2021-01-01 00:00:00
+85,32,Kurkure Masala Munch 90g,PepsiCo,90g,False,90,18,25,0.2,2021-01-01 00:00:00
+86,32,Pringles Original 107g,Pringles,107g,False,180,88,115,0.18,2021-01-01 00:00:00
+87,32,Balaji Wafers Classic 45g,Balaji,45g,False,90,8,12,0.25,2021-01-01 00:00:00
+88,32,Bingo Mad Angles 75g,ITC,75g,False,90,15,22,0.22,2021-01-01 00:00:00
+89,33,Parle-G Original 800g,Parle,800g,False,180,55,72,0.18,2021-01-01 00:00:00
+90,33,Britannia Good Day 200g,Britannia,200g,False,180,28,38,0.2,2021-01-01 00:00:00
+91,33,Oreo Original 300g,Mondelez,300g,False,180,62,82,0.2,2021-01-01 00:00:00
+92,33,Marie Gold 250g,Britannia,250g,False,180,22,30,0.2,2021-01-01 00:00:00
+93,33,Hide & Seek 300g,Parle,300g,False,180,55,72,0.18,2021-01-01 00:00:00
+94,33,Sunfeast Dark Fantasy 150g,ITC,150g,False,180,48,65,0.18,2021-01-01 00:00:00
+95,34,Cadbury Dairy Milk 40g,Mondelez,40g,False,365,28,40,0.2,2021-01-01 00:00:00
+96,34,Cadbury 5 Star 40g,Mondelez,40g,False,365,18,25,0.22,2021-01-01 00:00:00
+97,34,KitKat 38g,Nestle,38g,False,365,28,38,0.2,2021-01-01 00:00:00
+98,34,Dairy Milk Silk 60g,Mondelez,60g,False,365,55,72,0.2,2021-01-01 00:00:00
+99,34,Polo Peppermint 34g,Nestle,34g,False,365,15,22,0.22,2021-01-01 00:00:00
+100,35,Coca-Cola 750ml,Coca-Cola,750ml,False,180,30,40,0.18,2021-01-01 00:00:00
+101,35,Pepsi 750ml,PepsiCo,750ml,False,180,28,38,0.18,2021-01-01 00:00:00
+102,35,Limca 300ml,Coca-Cola,300ml,False,180,18,25,0.2,2021-01-01 00:00:00
+103,35,Frooti Mango 200ml,Parle Agro,200ml,False,180,12,18,0.25,2021-01-01 00:00:00
+104,35,Real Juice Mixed Fruit 1L,Dabur,1L,False,180,88,115,0.18,2021-01-01 00:00:00
+105,35,Tropicana Orange 1L,PepsiCo,1L,False,180,98,128,0.18,2021-01-01 00:00:00
+106,35,Slice Mango 1.25L,PepsiCo,1.25L,False,180,45,60,0.18,2021-01-01 00:00:00
+107,36,Tata Tea Gold 500g,Tata,500g,False,365,185,240,0.18,2021-01-01 00:00:00
+108,36,Red Label Tea 500g,Brooke Bond,500g,False,365,175,225,0.18,2021-01-01 00:00:00
+109,36,Nescafe Classic 200g,Nestle,200g,False,365,272,350,0.18,2021-01-01 00:00:00
+110,36,Bru Gold Coffee 200g,HUL,200g,False,365,215,278,0.18,2021-01-01 00:00:00
+111,36,Green Tea Twinings 25 bags,Twinings,25 bags,False,365,175,225,0.18,2021-01-01 00:00:00
+112,37,Red Bull 250ml,Red Bull,250ml,False,365,88,120,0.22,2021-01-01 00:00:00
+113,37,Monster Energy 500ml,Monster,500ml,False,365,95,128,0.22,2021-01-01 00:00:00
+114,37,Sting Energy 250ml,PepsiCo,250ml,False,365,18,25,0.22,2021-01-01 00:00:00
+115,38,Bisleri 1L,Bisleri,1L,False,365,12,20,0.28,2021-01-01 00:00:00
+116,38,Kinley 500ml,Coca-Cola,500ml,False,365,8,15,0.28,2021-01-01 00:00:00
+117,38,Aquafina 1L,PepsiCo,1L,False,365,12,20,0.28,2021-01-01 00:00:00
+118,39,Britannia Bread White 400g,Britannia,400g,True,5,32,42,0.18,2021-01-01 00:00:00
+119,39,Modern Bread Whole Wheat 400g,Modern,400g,True,5,38,50,0.18,2021-01-01 00:00:00
+120,39,Harvest Gold Bread 400g,Harvest Gold,400g,True,5,28,38,0.18,2021-01-01 00:00:00
+121,39,Pav Buns (6 pcs),Local Bakery,6 pcs,True,2,22,30,0.18,2021-01-01 00:00:00
+122,40,Britannia Cake Slice 60g,Britannia,60g,False,30,22,30,0.2,2021-01-01 00:00:00
+123,40,Monginis Pastry 100g,Monginis,100g,True,2,38,55,0.25,2021-01-01 00:00:00
+124,41,Britannia Rusk 300g,Britannia,300g,False,180,45,60,0.18,2021-01-01 00:00:00
+125,41,Parle Rusks Elaichi 300g,Parle,300g,False,180,42,55,0.18,2021-01-01 00:00:00
+126,42,Haldiram's Gulab Jamun 500g,Haldiram's,500g,False,30,88,120,0.22,2021-01-01 00:00:00
+127,42,MTR Gulab Jamun Mix 200g,MTR,200g,False,180,58,78,0.2,2021-01-01 00:00:00
+128,43,Haldiram's Kaju Katli 250g,Haldiram's,250g,False,15,195,260,0.2,2021-01-01 00:00:00
+129,43,Bikaji Soan Papdi 250g,Bikaji,250g,False,30,85,115,0.22,2021-01-01 00:00:00
+130,44,Amul Vanilla Ice Cream 500ml,Amul,500ml,True,60,85,110,0.18,2021-01-01 00:00:00
+131,44,Kwality Walls Cornetto 100ml,HUL,100ml,True,60,30,42,0.22,2021-01-01 00:00:00
+132,44,Mother Dairy Ice Cream 500ml,Mother Dairy,500ml,True,60,80,105,0.18,2021-01-01 00:00:00
+133,45,McCain Frozen Peas 500g,McCain,500g,True,180,55,75,0.2,2021-01-01 00:00:00
+134,45,Safal Frozen Corn 500g,Safal,500g,True,180,48,65,0.2,2021-01-01 00:00:00
+135,46,McCain Aloo Tikki 400g,McCain,400g,True,180,88,118,0.2,2021-01-01 00:00:00
+136,46,Godrej Yummiez Chicken 500g,Godrej,500g,True,90,185,250,0.22,2021-01-01 00:00:00
+137,47,MTR Upma 80g,MTR,80g,False,365,32,45,0.22,2021-01-01 00:00:00
+138,47,Maggi Noodles 4-pack,Nestle,280g,False,180,55,72,0.18,2021-01-01 00:00:00
+139,47,Knorr Soup Chicken 43g,HUL,43g,False,365,28,38,0.22,2021-01-01 00:00:00
+140,47,MTR Dal Makhani 300g,MTR,300g,False,365,95,128,0.22,2021-01-01 00:00:00
+141,48,Dove Soap 75g,HUL,75g,False,365,38,52,0.22,2021-01-01 00:00:00
+142,48,Dettol Soap 75g,Reckitt,75g,False,365,35,48,0.22,2021-01-01 00:00:00
+143,48,Lifebuoy Soap 100g,HUL,100g,False,365,22,32,0.25,2021-01-01 00:00:00
+144,48,Lux Soap 100g,HUL,100g,False,365,25,35,0.25,2021-01-01 00:00:00
+145,48,Savlon Liquid Handwash 200ml,ICI,200ml,False,365,62,85,0.22,2021-01-01 00:00:00
+146,49,Head & Shoulders Shampoo 180ml,P&G,180ml,False,365,148,195,0.18,2021-01-01 00:00:00
+147,49,Pantene Shampoo 180ml,P&G,180ml,False,365,138,185,0.18,2021-01-01 00:00:00
+148,49,Parachute Coconut Oil 500ml,Marico,500ml,False,365,128,170,0.18,2021-01-01 00:00:00
+149,49,Vatika Hair Oil 300ml,Dabur,300ml,False,365,112,150,0.18,2021-01-01 00:00:00
+150,50,Nivea Body Lotion 200ml,Nivea,200ml,False,365,148,195,0.18,2021-01-01 00:00:00
+151,50,Lakme Face Wash 100ml,HUL,100ml,False,365,98,135,0.2,2021-01-01 00:00:00
+152,50,Pond's Cold Cream 100ml,HUL,100ml,False,365,68,92,0.22,2021-01-01 00:00:00
+153,51,Colgate Strong Teeth 200g,Colgate,200g,False,365,55,75,0.22,2021-01-01 00:00:00
+154,51,Pepsodent Germicheck 200g,HUL,200g,False,365,48,68,0.22,2021-01-01 00:00:00
+155,51,Sensodyne 100g,GSK,100g,False,365,148,195,0.18,2021-01-01 00:00:00
+156,51,Colgate 360 Toothbrush,Colgate,1 pc,False,365,65,90,0.22,2021-01-01 00:00:00
+157,52,Colin Glass Cleaner 500ml,Reckitt,500ml,False,365,72,98,0.22,2021-01-01 00:00:00
+158,52,Lizol Disinfectant 500ml,Reckitt,500ml,False,365,85,118,0.22,2021-01-01 00:00:00
+159,52,Harpic Power Plus 500ml,Reckitt,500ml,False,365,88,122,0.22,2021-01-01 00:00:00
+160,53,Surf Excel Easy Wash 1kg,HUL,1kg,False,365,145,195,0.18,2021-01-01 00:00:00
+161,53,Ariel Powder 1kg,P&G,1kg,False,365,162,215,0.18,2021-01-01 00:00:00
+162,53,Vim Dishwash Bar 300g,HUL,300g,False,365,28,40,0.22,2021-01-01 00:00:00
+163,53,Exo Dishwash Bar 700g,CavinKare,700g,False,365,45,62,0.22,2021-01-01 00:00:00
+164,53,Rin Advance Detergent 1kg,HUL,1kg,False,365,98,135,0.22,2021-01-01 00:00:00
+165,54,Surya Excel Tissues 200 pcs,Surya,200 pcs,False,365,68,95,0.22,2021-01-01 00:00:00
+166,54,Scotties Toilet Roll 6 pk,Kimberly-Clark,6 rolls,False,365,155,210,0.22,2021-01-01 00:00:00
+167,55,Revital H 30 caps,Pfizer,30 caps,False,365,235,320,0.22,2021-01-01 00:00:00
+168,55,Supradyn 30 tabs,Bayer,30 tabs,False,365,185,250,0.22,2021-01-01 00:00:00
+169,56,Patanjali Chyawanprash 500g,Patanjali,500g,False,365,88,125,0.25,2021-01-01 00:00:00
+170,56,Dabur Chyawanprash 500g,Dabur,500g,False,365,145,195,0.22,2021-01-01 00:00:00
+171,56,Himalaya Triphala 60 tabs,Himalaya,60 tabs,False,365,75,105,0.25,2021-01-01 00:00:00
+172,57,Horlicks Junior 500g,GSK,500g,False,365,235,320,0.22,2021-01-01 00:00:00
+173,57,Bournvita 500g,Mondelez,500g,False,365,248,335,0.22,2021-01-01 00:00:00
+174,57,Complan Chocolate 500g,Kraft Heinz,500g,False,365,285,385,0.22,2021-01-01 00:00:00
+175,58,Cerelac Rice 300g,Nestle,300g,False,365,185,250,0.22,2021-01-01 00:00:00
+176,58,Farex Wheat 300g,Heinz,300g,False,365,165,225,0.22,2021-01-01 00:00:00
+177,59,Pampers Active Baby M 30 pcs,P&G,30 pcs,False,365,420,575,0.22,2021-01-01 00:00:00
+178,59,Huggies Ultra Dry M 30 pcs,Kimberly-Clark,30 pcs,False,365,398,545,0.22,2021-01-01 00:00:00
+179,59,Mama Earth Baby Wipes 80 pcs,MamaEarth,80 pcs,False,365,148,205,0.22,2021-01-01 00:00:00
+180,60,Johnson's Baby Powder 200g,J&J,200g,False,365,98,135,0.22,2021-01-01 00:00:00
+181,60,Himalaya Baby Shampoo 200ml,Himalaya,200ml,False,365,112,155,0.22,2021-01-01 00:00:00
+182,61,Cycle Pure Agarbatti 100 sticks,Cycle,100 stks,False,365,28,42,0.28,2021-01-01 00:00:00
+183,61,Mangaldeep Rose Agarbatti,ITC,12 stks,False,365,18,28,0.28,2021-01-01 00:00:00
+184,62,Puja Thali Set (Small),Local Brand,1 set,False,365,95,140,0.28,2021-01-01 00:00:00
+185,62,Kumkum 50g,Local Brand,50g,False,365,12,20,0.3,2021-01-01 00:00:00
+186,62,Camphor Tabs 50g,Mangaldeep,50g,False,365,38,55,0.28,2021-01-01 00:00:00
+187,63,Earthen Diya (10 pcs),Local Craft,10 pcs,False,365,18,30,0.3,2021-01-01 00:00:00
+188,63,Wax Candle Set 12 pcs,Mysore,12 pcs,False,365,28,42,0.28,2021-01-01 00:00:00
+189,64,Bhagavad Gita (Hindi),Geeta Press,1 book,False,365,55,80,0.28,2021-01-01 00:00:00

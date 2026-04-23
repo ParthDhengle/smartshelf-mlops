@@ -1,0 +1,495 @@
+-- Table: public.weather
+
+-- DROP TABLE IF EXISTS public.weather;
+
+CREATE TABLE IF NOT EXISTS public.weather
+(
+    weather_id integer NOT NULL,
+    store_id integer,
+    weather_date date,
+    temperature_c numeric,
+    rainfall_mm numeric,
+    humidity_pct numeric,
+    weather_type character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT weather_pkey PRIMARY KEY (weather_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.weather
+    OWNER to postgres;
+-- Index: idx_weather_store_date
+
+-- DROP INDEX IF EXISTS public.idx_weather_store_date;
+
+CREATE INDEX IF NOT EXISTS idx_weather_store_date
+    ON public.weather USING btree
+    (store_id ASC NULLS LAST, weather_date ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+    -- Table: public.suppliers
+
+-- DROP TABLE IF EXISTS public.suppliers;
+
+CREATE TABLE IF NOT EXISTS public.suppliers
+(
+    supplier_id integer NOT NULL,
+    supplier_name character varying(100) COLLATE pg_catalog."default",
+    city character varying(100) COLLATE pg_catalog."default",
+    lat numeric,
+    lon numeric,
+    lead_time_days integer,
+    delivery_cost numeric,
+    reliability_score numeric,
+    CONSTRAINT suppliers_pkey PRIMARY KEY (supplier_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.suppliers
+    OWNER to postgres;
+
+
+-- Table: public.stores
+
+-- DROP TABLE IF EXISTS public.stores;
+
+CREATE TABLE IF NOT EXISTS public.stores
+(
+    store_id integer NOT NULL,
+    store_name character varying(100) COLLATE pg_catalog."default",
+    city character varying(100) COLLATE pg_catalog."default",
+    state character varying(50) COLLATE pg_catalog."default",
+    store_type character varying(50) COLLATE pg_catalog."default",
+    store_size_sqft numeric,
+    lat numeric,
+    lon numeric,
+    CONSTRAINT stores_pkey PRIMARY KEY (store_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.stores
+    OWNER to postgres;
+
+
+-- Table: public.sales_orders
+
+-- DROP TABLE IF EXISTS public.sales_orders;
+
+CREATE TABLE IF NOT EXISTS public.sales_orders
+(
+    order_id integer NOT NULL,
+    store_id integer,
+    order_date date,
+    total_amount numeric,
+    payment_method character varying(50) COLLATE pg_catalog."default",
+    customer_count integer,
+    CONSTRAINT sales_orders_pkey PRIMARY KEY (order_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.sales_orders
+    OWNER to postgres;
+-- Index: idx_sales_orders_date
+
+-- DROP INDEX IF EXISTS public.idx_sales_orders_date;
+
+CREATE INDEX IF NOT EXISTS idx_sales_orders_date
+    ON public.sales_orders USING btree
+    (order_date ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+-- Index: idx_sales_orders_store
+
+-- DROP INDEX IF EXISTS public.idx_sales_orders_store;
+
+CREATE INDEX IF NOT EXISTS idx_sales_orders_store
+    ON public.sales_orders USING btree
+    (store_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+-- Table: public.sales_order_items
+
+-- DROP TABLE IF EXISTS public.sales_order_items;
+
+CREATE TABLE IF NOT EXISTS public.sales_order_items
+(
+    item_id integer NOT NULL,
+    order_id integer,
+    product_id integer,
+    quantity integer,
+    unit_price numeric,
+    discount_pct numeric,
+    line_total numeric,
+    CONSTRAINT sales_order_items_pkey PRIMARY KEY (item_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.sales_order_items
+    OWNER to postgres;
+-- Index: idx_sales_items_order
+
+-- DROP INDEX IF EXISTS public.idx_sales_items_order;
+
+CREATE INDEX IF NOT EXISTS idx_sales_items_order
+    ON public.sales_order_items USING btree
+    (order_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+-- Index: idx_sales_items_product
+
+-- DROP INDEX IF EXISTS public.idx_sales_items_product;
+
+CREATE INDEX IF NOT EXISTS idx_sales_items_product
+    ON public.sales_order_items USING btree
+    (product_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+-- Table: public.purchase_orders
+
+-- DROP TABLE IF EXISTS public.purchase_orders;
+
+CREATE TABLE IF NOT EXISTS public.purchase_orders
+(
+    po_id integer NOT NULL,
+    supplier_id integer,
+    store_id integer,
+    order_date date,
+    expected_delivery date,
+    status character varying(50) COLLATE pg_catalog."default",
+    total_cost numeric,
+    CONSTRAINT purchase_orders_pkey PRIMARY KEY (po_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.purchase_orders
+    OWNER to postgres;
+-- Index: idx_po_store
+
+-- DROP INDEX IF EXISTS public.idx_po_store;
+
+CREATE INDEX IF NOT EXISTS idx_po_store
+    ON public.purchase_orders USING btree
+    (store_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+-- Index: idx_po_supplier
+
+-- DROP INDEX IF EXISTS public.idx_po_supplier;
+
+CREATE INDEX IF NOT EXISTS idx_po_supplier
+    ON public.purchase_orders USING btree
+    (supplier_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+-- Table: public.purchase_order_items
+
+-- DROP TABLE IF EXISTS public.purchase_order_items;
+
+CREATE TABLE IF NOT EXISTS public.purchase_order_items
+(
+    po_item_id integer NOT NULL,
+    po_id integer,
+    product_id integer,
+    quantity integer,
+    purchase_price numeric,
+    CONSTRAINT purchase_order_items_pkey PRIMARY KEY (po_item_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.purchase_order_items
+    OWNER to postgres;
+
+
+-- Table: public.promotions
+
+-- DROP TABLE IF EXISTS public.promotions;
+
+CREATE TABLE IF NOT EXISTS public.promotions
+(
+    promotion_id integer NOT NULL,
+    promo_name character varying(100) COLLATE pg_catalog."default",
+    promo_type character varying(50) COLLATE pg_catalog."default",
+    discount_pct numeric,
+    min_qty numeric,
+    start_date date,
+    end_date date,
+    CONSTRAINT promotions_pkey PRIMARY KEY (promotion_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.promotions
+    OWNER to postgres;
+
+-- Table: public.promotion_products
+
+-- DROP TABLE IF EXISTS public.promotion_products;
+
+CREATE TABLE IF NOT EXISTS public.promotion_products
+(
+    promotion_id integer NOT NULL,
+    product_id integer NOT NULL,
+    store_id integer NOT NULL,
+    CONSTRAINT promotion_products_pkey PRIMARY KEY (promotion_id, product_id, store_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.promotion_products
+    OWNER to postgres;
+
+-- Table: public.products
+
+-- DROP TABLE IF EXISTS public.products;
+
+CREATE TABLE IF NOT EXISTS public.products
+(
+    product_id integer NOT NULL,
+    category_id integer,
+    product_name character varying(200) COLLATE pg_catalog."default",
+    brand character varying(100) COLLATE pg_catalog."default",
+    unit_size character varying(50) COLLATE pg_catalog."default",
+    perishable boolean,
+    shelf_life_days integer,
+    base_cost_price numeric,
+    base_sell_price numeric,
+    gross_margin numeric,
+    created_at timestamp without time zone,
+    CONSTRAINT products_pkey PRIMARY KEY (product_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.products
+    OWNER to postgres;
+-- Index: idx_products_category
+
+-- DROP INDEX IF EXISTS public.idx_products_category;
+
+CREATE INDEX IF NOT EXISTS idx_products_category
+    ON public.products USING btree
+    (category_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+-- Table: public.product_suppliers
+
+-- DROP TABLE IF EXISTS public.product_suppliers;
+
+CREATE TABLE IF NOT EXISTS public.product_suppliers
+(
+    product_id integer NOT NULL,
+    supplier_id integer NOT NULL,
+    supplier_price numeric,
+    min_order_qty integer,
+    CONSTRAINT product_suppliers_pkey PRIMARY KEY (product_id, supplier_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.product_suppliers
+    OWNER to postgres;
+
+-- Table: public.product_prices
+
+-- DROP TABLE IF EXISTS public.product_prices;
+
+CREATE TABLE IF NOT EXISTS public.product_prices
+(
+    price_id integer NOT NULL,
+    product_id integer,
+    store_id integer,
+    promotion_id integer,
+    selling_price numeric,
+    competitor_price numeric,
+    discount_pct numeric,
+    effective_date date,
+    CONSTRAINT product_prices_pkey PRIMARY KEY (price_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.product_prices
+    OWNER to postgres;
+-- Index: idx_product_prices_product
+
+-- DROP INDEX IF EXISTS public.idx_product_prices_product;
+
+CREATE INDEX IF NOT EXISTS idx_product_prices_product
+    ON public.product_prices USING btree
+    (product_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+-- Index: idx_product_prices_store
+
+-- DROP INDEX IF EXISTS public.idx_product_prices_store;
+
+CREATE INDEX IF NOT EXISTS idx_product_prices_store
+    ON public.product_prices USING btree
+    (store_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+-- Table: public.product_costs
+
+-- DROP TABLE IF EXISTS public.product_costs;
+
+CREATE TABLE IF NOT EXISTS public.product_costs
+(
+    cost_id integer NOT NULL,
+    product_id integer,
+    supplier_id integer,
+    cost_price numeric,
+    effective_date date,
+    CONSTRAINT product_costs_pkey PRIMARY KEY (cost_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.product_costs
+    OWNER to postgres;
+
+
+
+-- Table: public.inventory_transactions
+
+-- DROP TABLE IF EXISTS public.inventory_transactions;
+
+CREATE TABLE IF NOT EXISTS public.inventory_transactions
+(
+    txn_id integer NOT NULL,
+    product_id integer,
+    store_id integer,
+    txn_date date,
+    txn_type character varying(50) COLLATE pg_catalog."default",
+    quantity integer,
+    reference_id integer,
+    notes text COLLATE pg_catalog."default",
+    CONSTRAINT inventory_transactions_pkey PRIMARY KEY (txn_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.inventory_transactions
+    OWNER to postgres;
+-- Index: idx_inv_txn_store_date
+
+-- DROP INDEX IF EXISTS public.idx_inv_txn_store_date;
+
+CREATE INDEX IF NOT EXISTS idx_inv_txn_store_date
+    ON public.inventory_transactions USING btree
+    (store_id ASC NULLS LAST, txn_date ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+
+-- Table: public.inventory
+
+-- DROP TABLE IF EXISTS public.inventory;
+
+CREATE TABLE IF NOT EXISTS public.inventory
+(
+    inventory_id integer NOT NULL,
+    store_id integer,
+    product_id integer,
+    stock_on_hand integer,
+    reorder_point integer,
+    safety_stock integer,
+    max_stock_level integer,
+    last_updated timestamp without time zone,
+    CONSTRAINT inventory_pkey PRIMARY KEY (inventory_id),
+    CONSTRAINT inventory_store_id_product_id_key UNIQUE (store_id, product_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.inventory
+    OWNER to postgres;
+-- Index: idx_inventory_product
+
+-- DROP INDEX IF EXISTS public.idx_inventory_product;
+
+CREATE INDEX IF NOT EXISTS idx_inventory_product
+    ON public.inventory USING btree
+    (product_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+-- Index: idx_inventory_store
+
+-- DROP INDEX IF EXISTS public.idx_inventory_store;
+
+CREATE INDEX IF NOT EXISTS idx_inventory_store
+    ON public.inventory USING btree
+    (store_id ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+
+-- Table: public.economic_data
+
+-- DROP TABLE IF EXISTS public.economic_data;
+
+CREATE TABLE IF NOT EXISTS public.economic_data
+(
+    econ_id integer NOT NULL,
+    econ_date date,
+    inflation_rate numeric,
+    cpi numeric,
+    fuel_price numeric,
+    unemployment_rate numeric,
+    CONSTRAINT economic_data_pkey PRIMARY KEY (econ_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.economic_data
+    OWNER to postgres;
+
+-- Table: public.categories
+
+-- DROP TABLE IF EXISTS public.categories;
+
+CREATE TABLE IF NOT EXISTS public.categories
+(
+    category_id integer NOT NULL,
+    category_name character varying(100) COLLATE pg_catalog."default",
+    parent_category_id integer,
+    CONSTRAINT categories_pkey PRIMARY KEY (category_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.categories
+    OWNER to postgres;
+
+-- Table: public.calendar
+
+-- DROP TABLE IF EXISTS public.calendar;
+
+CREATE TABLE IF NOT EXISTS public.calendar
+(
+    date date NOT NULL,
+    day_of_week integer,
+    month integer,
+    quarter integer,
+    year integer,
+    is_weekend boolean,
+    season character varying(20) COLLATE pg_catalog."default",
+    is_holiday boolean,
+    festival_name character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT calendar_pkey PRIMARY KEY (date)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.calendar
+    OWNER to postgres;

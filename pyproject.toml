@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartshelf"
+version = "0.1.0"
+requires-python = ">=3.10"
+readme = "README.md"
+authors=[
+    {name = "Parth Dhengle", email = "parthdhengle2004@gmail.com"}
+]
+description = "This project aims to build an end-to-end machine learning system for supermarket demand forecasting and price prediction. The system will analyze sales, pricing, seasonal trends, and external factors to predict product demand and suggest optimal pricing. It will also monitor model performance, detect data drift, and automatically retrain and redeploy the model. The goal is to help supermarkets reduce inventory waste, improve pricing strategy, and increase revenue."
+keywords = ["MLOPs", "Demand forcasting", "Price Prediction", "Inventory Management", "Supermarket", "Retail", "ML System", "ML Pipeline", "MLOps Pipeline", "MLOps System", "MLOps", "MLOps for Retail", "MLOps for Supermarket", "MLOps for Demand Forecasting", "MLOps for Price Prediction", "MLOps for Inventory Management", "MLOps for Retail", "MLOps for Supermarket", "MLOps for Demand Forecasting", "MLOps for Price Prediction", "MLOps for Inventory Management"]
+[tool.setuptools.packages.find]
+where = ["src"]
+

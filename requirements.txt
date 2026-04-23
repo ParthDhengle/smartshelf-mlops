@@ -4,6 +4,7 @@ numpy
 scikit-learn
 xgboost
 lightgbm
+pyarrow
 
 # MLflow
 mlflow
@@ -13,18 +14,23 @@ fastapi
 uvicorn[standard]
 pydantic
 
+# Database
+sqlalchemy
+psycopg2-binary
+pandas-gbq
+google-cloud-bigquery
+
 # Data validation & drift
-evidently
-great-expectations
+scipy
 
 # Monitoring
 prometheus-client
 
 # Scheduling / automation
-apscheduler
+prefect>=2.14.0
+prefect-sqlalchemy
 
 # Data & utilities
-kaggle
 python-dotenv
 joblib
 requests
@@ -32,6 +38,7 @@ requests
 # Testing
 pytest
 httpx
+pytest-timeout
 
 # Notebook
 jupyter

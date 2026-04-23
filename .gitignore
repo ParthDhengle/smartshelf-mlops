@@ -1,9 +1,42 @@
+# Environment
 .env
+.env.local
 venv/
-mlflow_artifacts/
+
+# Data (raw CSVs are large)
 data/raw/*.csv
+data/processed/*.parquet
+
+# Python
 __pycache__/
 *.pyc
-.DS_Store
+*.pyo
 *.egg-info/
 .pytest_cache/
+dist/
+build/
+
+# MLflow local artifacts
+mlflow_artifacts/
+mlruns/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Monitoring data volumes
+prometheus_data/
+grafana_data/
+
+# Secrets
+*.json
+!keeps/schema.json
+!grafana/dashboards/*.json
+!package.json
+!package-lock.json

@@ -1,0 +1,123 @@
+name: CD — Train & Deploy
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      train_models:
+        description: "Run model training"
+        type: boolean
+        default: true
+
+env:
+  PYTHONPATH: src
+  MLFLOW_TRACKING_URI: http://localhost:5000
+
+jobs:
+  validate:
+    name: Validate & Test
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: smartshelf
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:test_password@localhost:5432/smartshelf
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short --timeout=120
+
+      - name: Validate database schema
+        run: |
+          python -c "
+          from sqlalchemy import create_engine, inspect
+          import os
+          engine = create_engine(os.getenv('DATABASE_URL'))
+          inspector = inspect(engine)
+          tables = inspector.get_table_names()
+          print(f'Tables found: {len(tables)}')
+          "
+
+  train:
+    name: Train Models
+    needs: validate
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.train_models == 'true' || startsWith(github.ref, 'refs/tags/v') }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Start MLflow server
+        run: |
+          mlflow server --host 0.0.0.0 --port 5000 &
+          sleep 5
+
+      - name: Run training pipeline
+        run: python -m smartshelf.pipelines.train_pipeline
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          MLFLOW_TRACKING_URI: http://localhost:5000
+
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-artifacts
+          path: data/processed/
+          retention-days: 30
+
+  deploy:
+    name: Deploy FastAPI
+    needs: train
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t smartshelf-api:${{ github.ref_name }} .
+          docker tag smartshelf-api:${{ github.ref_name }} smartshelf-api:latest
+
+      - name: Push to registry (placeholder)
+        run: |
+          echo "🚀 In production, push to your container registry here"
+          echo "   docker push <registry>/smartshelf-api:${{ github.ref_name }}"
+
+      - name: Deploy (placeholder)
+        run: |
+          echo "🚀 In production, deploy to your target environment here"
+          echo "   kubectl apply / docker-compose up / etc."

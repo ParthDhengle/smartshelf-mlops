@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # SmartShelf FastAPI — exposes /metrics endpoint
+  - job_name: "smartshelf-api"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:8000"]
+        labels:
+          app: "smartshelf"
+          component: "api"
+
+  # MLflow tracking server (if Prometheus metrics plugin is enabled)
+  - job_name: "mlflow"
+    static_configs:
+      - targets: ["host.docker.internal:5000"]
+        labels:
+          app: "smartshelf"
+          component: "mlflow"
+
+  # Prometheus self-monitoring
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]

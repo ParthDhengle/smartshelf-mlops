@@ -1,0 +1,75 @@
+name: CI — Test & Lint
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: smartshelf
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:test_password@localhost:5432/smartshelf
+      MLFLOW_TRACKING_URI: http://localhost:5000
+      PYTHONPATH: src
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+          pip install ruff
+
+      - name: Lint with Ruff
+        run: |
+          ruff check src/ tests/ --select E,W,F --ignore E501
+
+      - name: Run unit tests
+        run: |
+          pytest tests/ -v --tb=short -x --timeout=120
+
+      - name: Validate feature schema
+        run: |
+          python -c "from smartshelf.config import DEMAND_FEATURES; print(f'{len(DEMAND_FEATURES)} demand features defined')"
+
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          pip install mypy pandas-stubs types-requests
+          pip install -r requirements.txt
+          pip install -e .
+      - run: mypy src/smartshelf --ignore-missing-imports --no-strict-optional

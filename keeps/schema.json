@@ -1,0 +1,204 @@
+{
+    "calendar.csv": {
+        "num_columns": 9,
+        "columns": [
+            "date",
+            "day_of_week",
+            "month",
+            "quarter",
+            "year",
+            "is_weekend",
+            "season",
+            "is_holiday",
+            "festival_name"
+        ]
+    },
+    "economic_data.csv": {
+        "num_columns": 6,
+        "columns": [
+            "econ_id",
+            "econ_date",
+            "inflation_rate",
+            "cpi",
+            "fuel_price",
+            "unemployment_rate"
+        ]
+    },
+    "product_costs.csv": {
+        "num_columns": 5,
+        "columns": [
+            "cost_id",
+            "product_id",
+            "supplier_id",
+            "cost_price",
+            "effective_date"
+        ]
+    },
+    "product_prices.csv": {
+        "num_columns": 8,
+        "columns": [
+            "price_id",
+            "product_id",
+            "store_id",
+            "promotion_id",
+            "selling_price",
+            "competitor_price",
+            "discount_pct",
+            "effective_date"
+        ]
+    },
+    "product_suppliers.csv": {
+        "num_columns": 4,
+        "columns": [
+            "product_id",
+            "supplier_id",
+            "supplier_price",
+            "min_order_qty"
+        ]
+    },
+    "products.csv": {
+        "num_columns": 11,
+        "columns": [
+            "product_id",
+            "category_id",
+            "product_name",
+            "brand",
+            "unit_size",
+            "perishable",
+            "shelf_life_days",
+            "base_cost_price",
+            "base_sell_price",
+            "gross_margin",
+            "created_at"
+        ]
+    },
+    "promotion_products.csv": {
+        "num_columns": 3,
+        "columns": [
+            "promotion_id",
+            "product_id",
+            "store_id"
+        ]
+    },
+    "promotions.csv": {
+        "num_columns": 7,
+        "columns": [
+            "promotion_id",
+            "promo_name",
+            "promo_type",
+            "discount_pct",
+            "min_qty",
+            "start_date",
+            "end_date"
+        ]
+    },
+    "stores.csv": {
+        "num_columns": 8,
+        "columns": [
+            "store_id",
+            "store_name",
+            "city",
+            "state",
+            "store_type",
+            "store_size_sqft",
+            "lat",
+            "lon"
+        ]
+    },
+    "suppliers.csv": {
+        "num_columns": 8,
+        "columns": [
+            "supplier_id",
+            "supplier_name",
+            "city",
+            "lat",
+            "lon",
+            "lead_time_days",
+            "delivery_cost",
+            "reliability_score"
+        ]
+    },
+    "inventory_transactions.csv": {
+        "num_columns": 8,
+        "columns": [
+            "txn_id",
+            "product_id",
+            "store_id",
+            "txn_date",
+            "txn_type",
+            "quantity",
+            "reference_id",
+            "notes"
+        ]
+    },
+    "inventory.csv": {
+        "num_columns": 8,
+        "columns": [
+            "inventory_id",
+            "store_id",
+            "product_id",
+            "stock_on_hand",
+            "reorder_point",
+            "safety_stock",
+            "max_stock_level",
+            "last_updated"
+        ]
+    },
+    "purchase_order_items.csv": {
+        "num_columns": 5,
+        "columns": [
+            "po_item_id",
+            "po_id",
+            "product_id",
+            "quantity",
+            "purchase_price"
+        ]
+    },
+    "purchase_orders.csv": {
+        "num_columns": 7,
+        "columns": [
+            "po_id",
+            "supplier_id",
+            "store_id",
+            "order_date",
+            "expected_delivery",
+            "status",
+            "total_cost"
+        ]
+    },
+    "sales_order_items.csv": {
+        "num_columns": 7,
+        "columns": [
+            "item_id",
+            "order_id",
+            "product_id",
+            "quantity",
+            "unit_price",
+            "discount_pct",
+            "line_total"
+        ]
+    },
+    "sales_orders.csv": {
+        "num_columns": 6,
+        "columns": [
+            "order_id",
+            "store_id",
+            "order_date",
+            "total_amount",
+            "payment_method",
+            "customer_count"
+        ]
+    },
+    "weather.csv": {
+        "num_columns": 7,
+        "columns": [
+            "weather_id",
+            "store_id",
+            "weather_date",
+            "temperature_c",
+            "rainfall_mm",
+            "humidity_pct",
+            "weather_type"
+        ]
+    }
+}
