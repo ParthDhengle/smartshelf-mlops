@@ -120,7 +120,7 @@ export default function InventoryPage() {
           </thead>
           <tbody>
             {alerts.length === 0 ? (
-               <tr><td colSpan={6} style={{textAlign: "center"}}>All stock systems nominal!</td></tr>
+              <tr><td colSpan={6} style={{ textAlign: "center" }}>All stock systems nominal!</td></tr>
             ) : alerts.map((a) => {
               const status = getStockStatus(a.stock_on_hand, a.reorder_point);
               return (

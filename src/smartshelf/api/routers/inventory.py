@@ -8,7 +8,15 @@ router = APIRouter()
 @router.get("/inventory")
 async def get_inventory(limit: int = 100):
     engine = get_db_engine()
-    df = pd.read_sql(f"SELECT * FROM inventory ORDER BY store_id, product_id LIMIT {limit}", engine)
+    df = pd.read_sql(f"""
+        SELECT i.*, COALESCE(p.product_name, 'Unknown') as product_name
+        FROM inventory i
+        LEFT JOIN products p ON i.product_id = p.product_id
+        ORDER BY i.stock_on_hand ASC, i.store_id, i.product_id
+        LIMIT {limit}
+    """, engine)
+    import numpy as np
+    df = df.replace({np.nan: None})
     return df.to_dict(orient="records")
 
 @router.post("/inventory/transaction")

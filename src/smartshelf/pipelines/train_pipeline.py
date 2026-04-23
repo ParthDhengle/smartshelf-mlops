@@ -79,8 +79,9 @@ def run_training_pipeline(
 
     # Inject demand predictions back into the full feature set
     # Use the model to predict on ALL data (for downstream model training)
-    available_demand_features = [f for f in features.columns
-                                  if f in demand_model.get_booster().feature_names]
+    # IMPORTANT: Use the model's feature_names order (training order), NOT DataFrame column order
+    model_feature_names = demand_model.get_booster().feature_names
+    available_demand_features = [f for f in model_feature_names if f in features.columns]
     if not available_demand_features:
         from smartshelf.config import DEMAND_FEATURES
         available_demand_features = [f for f in DEMAND_FEATURES if f in features.columns]

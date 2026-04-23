@@ -26,6 +26,17 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import TimeSeriesSplit, RandomizedSearchCV
+import subprocess
+
+# ── Hardware Safety ────────────────────────────────────────────────────────
+try:
+    HAS_GPU = subprocess.run(["nvidia-smi"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+except Exception:
+    HAS_GPU = False
+
+DEVICE_XGB = "cuda" if HAS_GPU else "cpu"
+N_JOBS_CV = 2 if HAS_GPU else 1  
+N_JOBS_MODEL = -1 if HAS_GPU else 2  
 
 from smartshelf.config import (
     MLFLOW_EXPERIMENT_NAME,
@@ -94,23 +105,28 @@ def prepare_inventory_features(
     This is the final merge step before the inventory model trains.
     """
     engine = get_postgres_engine()
+    df = features_df.copy()
 
-    # Merge demand predictions
-    df = features_df.merge(
-        demand_preds[["product_id", "store_id", "date", "predicted_demand"]],
-        on=["product_id", "store_id", "date"],
-        how="left"
-    )
-
-    # Merge price predictions (if available)
-    if price_preds is not None and not price_preds.empty:
+    # Merge demand predictions if not already present
+    if "predicted_demand" not in df.columns:
         df = df.merge(
-            price_preds[["product_id", "store_id", "date", "optimal_price"]],
+            demand_preds[["product_id", "store_id", "date", "predicted_demand"]],
             on=["product_id", "store_id", "date"],
             how="left"
         )
-    else:
-        df["optimal_price"] = df.get("selling_price", 0)
+        df["predicted_demand"] = df["predicted_demand"].fillna(0)
+
+    # Merge price predictions if not already present
+    if "optimal_price" not in df.columns:
+        if price_preds is not None and not price_preds.empty:
+            df = df.merge(
+                price_preds[["product_id", "store_id", "date", "optimal_price"]],
+                on=["product_id", "store_id", "date"],
+                how="left"
+            )
+            df["optimal_price"] = df["optimal_price"].fillna(df.get("selling_price", 0))
+        else:
+            df["optimal_price"] = df.get("selling_price", 0)
 
     # Demand volatility
     df["demand_std"] = df.get("units_sold_roll_std_28", 0)
@@ -227,11 +243,12 @@ def train_inventory_model(
             cv = TimeSeriesSplit(n_splits=3)
             base = xgb.XGBRegressor(
                 objective="reg:squarederror", tree_method="hist",
+                device=DEVICE_XGB, n_jobs=N_JOBS_MODEL,
                 random_state=42, early_stopping_rounds=15,
             )
             search = RandomizedSearchCV(
                 base, PARAM_DISTRIBUTIONS, n_iter=n_iter, cv=cv,
-                scoring="neg_root_mean_squared_error", n_jobs=-1,
+                scoring="neg_root_mean_squared_error", n_jobs=N_JOBS_CV,
                 random_state=42, verbose=0,
             )
             search.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=False)
@@ -243,6 +260,7 @@ def train_inventory_model(
                 min_child_weight=10, subsample=0.8, colsample_bytree=0.8,
                 reg_alpha=0.1, reg_lambda=5.0,
                 objective="reg:squarederror", tree_method="hist",
+                device=DEVICE_XGB, n_jobs=N_JOBS_MODEL,
                 early_stopping_rounds=15, random_state=42,
             )
             model.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=False)

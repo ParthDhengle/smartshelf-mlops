@@ -21,6 +21,18 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
+import subprocess
+
+# ── Hardware Safety ────────────────────────────────────────────────────────
+try:
+    HAS_GPU = subprocess.run(["nvidia-smi"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+except Exception:
+    HAS_GPU = False
+
+DEVICE_XGB = "cuda" if HAS_GPU else "cpu"
+# Force low thread count on CPU to prevent laptop freezing!
+N_JOBS_CV = 2 if HAS_GPU else 1  
+N_JOBS_MODEL = -1 if HAS_GPU else 2  
 
 from smartshelf.config import (
     DEMAND_FEATURES,
@@ -149,6 +161,8 @@ def train_demand_model(
             base_model = xgb.XGBRegressor(
                 objective="reg:squarederror",
                 tree_method="hist",
+                device=DEVICE_XGB,
+                n_jobs=N_JOBS_MODEL,
                 random_state=42,
                 early_stopping_rounds=20,
             )
@@ -158,7 +172,7 @@ def train_demand_model(
                 n_iter=n_iter,
                 cv=cv,
                 scoring="neg_root_mean_squared_error",
-                n_jobs=-1,
+                n_jobs=N_JOBS_CV,
                 random_state=42,
                 verbose=1,
             )
@@ -184,6 +198,8 @@ def train_demand_model(
                 gamma=0.1,
                 objective="reg:squarederror",
                 tree_method="hist",
+                device=DEVICE_XGB,
+                n_jobs=N_JOBS_MODEL,
                 early_stopping_rounds=20,
                 random_state=42,
             )

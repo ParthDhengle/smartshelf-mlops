@@ -90,7 +90,5 @@ DRIFT_LOOKBACK_DAYS = 30    # Number of days of recent data to compare against t
 API_HOST = os.getenv("API_HOST", "0.0.0.0")
 API_PORT = int(os.getenv("API_PORT", "8000"))
 
-# ── Airflow ──────────────────────────────────────────────────────────────────
-AIRFLOW_API_URL = os.getenv("AIRFLOW_API_URL", "http://localhost:8080/api/v1")
-AIRFLOW_USERNAME = os.getenv("AIRFLOW_USERNAME", "airflow")
-AIRFLOW_PASSWORD = os.getenv("AIRFLOW_PASSWORD", "airflow")
+# ── Prefect ──────────────────────────────────────────────────────────────────
+# Orchestration relies natively on pure python within src/smartshelf/flows/

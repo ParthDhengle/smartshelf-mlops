@@ -26,6 +26,17 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
+import subprocess
+
+# ── Hardware Safety ────────────────────────────────────────────────────────
+try:
+    HAS_GPU = subprocess.run(["nvidia-smi"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+except Exception:
+    HAS_GPU = False
+
+DEVICE_LGBM = "gpu" if HAS_GPU else "cpu"
+N_JOBS_CV = 2 if HAS_GPU else 1  
+N_JOBS_MODEL = -1 if HAS_GPU else 2  
 
 from smartshelf.config import (
     MLFLOW_EXPERIMENT_NAME,
@@ -222,10 +233,16 @@ def train_price_model(
         if tune:
             logger.info(f"Running RandomizedSearchCV ({n_iter} iterations)...")
             cv = TimeSeriesSplit(n_splits=3)
-            base = lgb.LGBMRegressor(objective="regression", random_state=42, verbosity=-1)
+            base = lgb.LGBMRegressor(
+                objective="regression", 
+                device_type=DEVICE_LGBM,
+                n_jobs=N_JOBS_MODEL,
+                random_state=42, 
+                verbosity=-1
+            )
             search = RandomizedSearchCV(
                 base, PARAM_DISTRIBUTIONS, n_iter=n_iter, cv=cv,
-                scoring="neg_root_mean_squared_error", n_jobs=-1,
+                scoring="neg_root_mean_squared_error", n_jobs=N_JOBS_CV,
                 random_state=42, verbose=0,
             )
             search.fit(X_train, y_train)
@@ -237,7 +254,10 @@ def train_price_model(
                 num_leaves=31, min_child_samples=20,
                 subsample=0.8, colsample_bytree=0.8,
                 reg_alpha=0.1, reg_lambda=5.0,
-                objective="regression", random_state=42, verbosity=-1,
+                objective="regression", 
+                device_type=DEVICE_LGBM,
+                n_jobs=N_JOBS_MODEL,
+                random_state=42, verbosity=-1,
             )
             model.fit(X_train, y_train)
             mlflow.log_params(model.get_params())

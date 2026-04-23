@@ -46,6 +46,8 @@ async function apiFetch(path: string, options: RequestInit = {}) {
 
 // ── Dashboard ────────────────────────────────────────────────────────────
 export const getKPIs = () => apiFetch("/api/v1/dashboard/kpis");
+export const getSalesTrend = () => apiFetch("/api/v1/dashboard/sales-trend");
+export const getCategoryBreakdown = () => apiFetch("/api/v1/dashboard/category-breakdown");
 
 // ── Products CRUD ────────────────────────────────────────────────────────
 export const getProducts = () => apiFetch("/api/v1/products");
@@ -93,3 +95,12 @@ export const getSuppliers = () => apiFetch("/api/v1/suppliers");
 
 export const getInventoryList = () => apiFetch("/api/v1/inventory?limit=300");
 
+// ── Model Registry (live from MLflow) ────────────────────────────────────
+export const getModelRegistry = () => apiFetch("/api/v1/admin/model-registry");
+
+// ── Sales History ────────────────────────────────────────────────────────
+export const getSalesHistory = (limit: number = 50) => apiFetch(`/api/v1/sales?limit=${limit}`);
+
+// ── Store Optimization ───────────────────────────────────────────────────
+export const optimizeStorePrice = (storeId: number) =>
+  apiFetch("/api/v1/optimize-store", { method: "POST", body: JSON.stringify({ store_id: storeId }) });

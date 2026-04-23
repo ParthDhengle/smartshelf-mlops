@@ -70,3 +70,20 @@ class FullPipelineResponse(BaseModel):
     price: PriceResponse
     inventory: InventoryResponse
     total_expected_profit: float
+
+class StoreOptimizationRequest(BaseModel):
+    store_id: int
+    
+class StoreOptimizationItem(BaseModel):
+    product_id: int
+    product_name: str
+    current_price: float
+    optimal_price: float
+    expected_7d_demand: float
+    expected_7d_profit: float
+    profit_uplift_pct: float
+    
+class StoreOptimizationResponse(BaseModel):
+    store_id: int
+    total_expected_profit: float
+    optimizations: List[StoreOptimizationItem]

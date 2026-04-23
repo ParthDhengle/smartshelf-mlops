@@ -1,5 +1,4 @@
 import logging
-import time
 from datetime import date, timedelta
 import numpy as np
 import pandas as pd
@@ -15,12 +14,26 @@ from smartshelf.api.schemas import (
     InventoryRequest, InventoryResponse,
     FullPipelineRequest, FullPipelineResponse
 )
-from smartshelf.monitoring.metrics_collector import record_prediction
+from smartshelf.config import DEMAND_FEATURES
+from smartshelf.models.price_model import PRICE_MODEL_FEATURES
+from smartshelf.models.inventory_model import INVENTORY_FEATURES
 # Reusing the feature building function from the old routes.py 
 # We'll just define it or import. Here we move the function logic locally:
 
 def build_inference_features(product_id: int, store_id: int, target_date: date) -> pd.DataFrame:
     engine = get_db_engine()
+
+    # ── TIME-TRAVEL OFFSET ────────────────────────────────────────────────────────
+    # The mock database ends on 2024-12-31. If the UI asks for dates in 2025/2026, 
+    # we simulate reality by mapping the SQL lookups back exactly to 2024 limits
+    # so lag features don't crash to exactly [0, 0, 0].
+    db_max_date = date(2024, 12, 31)
+    if target_date > db_max_date:
+        days_ahead = (target_date - db_max_date).days
+        lookup_date = target_date - timedelta(days=days_ahead)
+    else:
+        lookup_date = target_date
+    # ─────────────────────────────────────────────────────────────────────────────
 
     # Recent sales for lag/rolling features
     sales = pd.read_sql(f"""
@@ -31,15 +44,15 @@ def build_inference_features(product_id: int, store_id: int, target_date: date) 
         JOIN sales_orders so ON soi.order_id = so.order_id
         WHERE soi.product_id = {product_id}
           AND so.store_id = {store_id}
-          AND so.order_date >= '{target_date - timedelta(days=35)}'::date
-          AND so.order_date < '{target_date}'::date
+          AND so.order_date >= '{lookup_date - timedelta(days=35)}'::date
+          AND so.order_date < '{lookup_date}'::date
         GROUP BY so.order_date::date
         ORDER BY so.order_date::date
     """, engine)
 
     sales["date"] = pd.to_datetime(sales["date"])
     sales = sales.set_index("date").reindex(
-        pd.date_range(target_date - timedelta(days=35), target_date - timedelta(days=1)),
+        pd.date_range(lookup_date - timedelta(days=35), lookup_date - timedelta(days=1)),
         fill_value=0
     ).reset_index().rename(columns={"index": "date"})
 
@@ -64,7 +77,7 @@ def build_inference_features(product_id: int, store_id: int, target_date: date) 
         SELECT selling_price, competitor_price, discount_pct
         FROM product_prices
         WHERE product_id = {product_id} AND store_id = {store_id}
-          AND effective_date <= '{target_date}'
+          AND effective_date <= '{lookup_date}'
         ORDER BY effective_date DESC LIMIT 1
     """, engine)
 
@@ -157,8 +170,6 @@ router = APIRouter()
 
 @router.post("/predict-demand", response_model=DemandResponse)
 async def predict_demand(req: DemandRequest):
-    start_time = time.time()
-    
     model = get_demand_model()
     if model is None:
         raise HTTPException(503, "Demand model not available.")
@@ -168,7 +179,8 @@ async def predict_demand(req: DemandRequest):
     current = req.start_date
     while current <= req.end_date:
         features = build_inference_features(req.product_id, req.store_id, current)
-        pred = float(max(model.predict(features)[0], 0))
+        features_demand = features.reindex(columns=DEMAND_FEATURES, fill_value=0)
+        pred = float(max(model.predict(features_demand)[0], 0))
         total += pred
         forecasts.append(DemandPrediction(
             date=current,
@@ -178,17 +190,11 @@ async def predict_demand(req: DemandRequest):
         ))
         current += timedelta(days=1)
 
-    # Record metrics
-    latency = time.time() - start_time
-    record_prediction("demand_model", "/predict-demand", latency)
-
     return DemandResponse(product_id=req.product_id, store_id=req.store_id, forecasts=forecasts, total_predicted=round(total, 2))
 
 
 @router.post("/optimize-price", response_model=PriceResponse)
 async def optimize_price(req: PriceRequest):
-    start_time = time.time()
-    
     model = get_price_model()
     if model is None:
         raise HTTPException(503, "Price model not available.")
@@ -214,24 +220,20 @@ async def optimize_price(req: PriceRequest):
         f["selling_price"] = price
         f["effective_price"] = price * (1 - f["discount_pct"].iloc[0] / 100)
         f["price_vs_competitor"] = price - f["competitor_price"].iloc[0]
-        demand = max(float(model.predict(f)[0]), 0)
+        f_price = f.reindex(columns=PRICE_MODEL_FEATURES, fill_value=0)
+        demand = max(float(model.predict(f_price)[0]), 0)
         profit = (price - cost) * demand
         if profit > best_profit:
             best_profit, best_price, best_demand = profit, price, demand
 
-    p_curr = (current_price - cost) * max(float(model.predict(features)[0]), 0)
+    f_curr = features.reindex(columns=PRICE_MODEL_FEATURES, fill_value=0)
+    p_curr = (current_price - cost) * max(float(model.predict(f_curr)[0]), 0)
     uplift = ((best_profit - p_curr) / (p_curr + 1e-8)) * 100
-
-    # Record metrics
-    latency = time.time() - start_time
-    record_prediction("price_model", "/optimize-price", latency)
 
     return PriceResponse(product_id=req.product_id, store_id=req.store_id, current_price=round(current_price, 2), optimal_price=round(best_price, 2), expected_demand=round(best_demand, 2), expected_profit=round(best_profit, 2), profit_uplift_pct=round(uplift, 1))
 
 @router.post("/optimize-inventory", response_model=InventoryResponse)
 async def optimize_inventory(req: InventoryRequest):
-    start_time = time.time()
-    
     model = get_inventory_model()
     if model is None: raise HTTPException(503, "Inventory model not available.")
 
@@ -252,7 +254,8 @@ async def optimize_inventory(req: InventoryRequest):
     features["demand_std"] = features.get("units_sold_roll_std_28", pd.Series([0]))[0]
     features["lead_time_variance"] = 0
 
-    safety = max(int(model.predict(features)[0]), 0)
+    f_inv = features.reindex(columns=INVENTORY_FEATURES, fill_value=0)
+    safety = max(int(model.predict(f_inv)[0]), 0)
     lt = features["lead_time_days"].iloc[0]
     daily_d = features.get("predicted_demand", pd.Series([0])).iloc[0]
     reorder = int(daily_d * lt + safety)
@@ -264,10 +267,6 @@ async def optimize_inventory(req: InventoryRequest):
     inv = get_current_inventory(req.product_id, req.store_id)
     current_stock = inv["stock_on_hand"] if inv else None
     dos = round(current_stock / (daily_d + 0.01), 1) if current_stock else None
-
-    # Record metrics
-    latency = time.time() - start_time
-    record_prediction("inventory_model", "/optimize-inventory", latency)
 
     return InventoryResponse(product_id=req.product_id, store_id=req.store_id, reorder_point=reorder, safety_stock=safety, order_qty=eoq, predicted_daily_demand=round(daily_d, 2), current_stock=current_stock, days_of_stock_left=dos)
 
