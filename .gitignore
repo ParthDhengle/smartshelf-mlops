@@ -5,8 +5,9 @@ venv/
 .venv/
 
 # Data (raw CSVs are large)
-data/raw/*.csv
-data/processed/*.parquet
+data/raw/**/*.csv
+data/processed/**/*.parquet
+data/drift_reports/
 
 # Python
 __pycache__/
@@ -20,11 +21,19 @@ build/
 # MLflow local artifacts
 mlflow_artifacts/
 mlruns/
+mlartifacts/
 
 # IDE
 .vscode/
 .idea/
 .DS_Store
+.ipynb_checkpoints/
+
+# Python tooling
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
 
 # Frontend
 frontend/node_modules/

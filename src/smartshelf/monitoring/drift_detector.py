@@ -8,24 +8,19 @@ Implements:
   2. KS Test — detects prediction distribution shifts
   3. Threshold alerts with configurable sensitivity
 
-When drift exceeds thresholds → triggers Airflow retrain DAG.
+When drift exceeds thresholds → triggers the local Prefect training flow.
 """
 
 import json
 import logging
 from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
 import numpy as np
 import pandas as pd
-import requests
 from scipy import stats
 
 from smartshelf.config import (
-    AIRFLOW_API_URL,
-    AIRFLOW_PASSWORD,
-    AIRFLOW_USERNAME,
     DRIFT_LOOKBACK_DAYS,
     DRIFT_REPORTS_DIR,
     KS_THRESHOLD,
@@ -228,24 +223,17 @@ def run_drift_detection(
 
 def trigger_retraining() -> bool:
     """
-    Trigger the Airflow 'drift_triggered_retraining' DAG via REST API.
-    Returns True if triggered successfully.
+    Trigger the training flow using Prefect.
+
+    Returns True if the flow starts successfully.
     """
     try:
-        url = f"{AIRFLOW_API_URL}/dags/drift_triggered_retraining/dagRuns"
-        response = requests.post(
-            url,
-            json={"conf": {"trigger": "drift_detection", "timestamp": datetime.now().isoformat()}},
-            auth=(AIRFLOW_USERNAME, AIRFLOW_PASSWORD),
-            headers={"Content-Type": "application/json"},
-            timeout=10,
-        )
-        if response.status_code in (200, 201):
-            logger.info("✅ Retraining DAG triggered via Airflow API")
-            return True
-        else:
-            logger.error(f"Airflow API returned {response.status_code}: {response.text}")
-            return False
+        from smartshelf.flows.training_flow import weekly_training_flow
+
+        logger.info("Starting Prefect training flow after drift detection")
+        weekly_training_flow()
+        logger.info("✅ Retraining flow completed via Prefect")
+        return True
     except Exception as e:
         logger.error(f"Failed to trigger retraining: {e}")
         return False

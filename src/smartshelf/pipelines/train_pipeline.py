@@ -5,7 +5,7 @@ Runs the full training chain in dependency order:
 
     Features → Demand Model → Price Model → Inventory Model → Profit
 
-This is the single entry point for both manual runs and Airflow DAGs.
+    This is the single entry point for both manual runs and Prefect flows.
 It handles the data flow between dependent models:
   1. Build features
   2. Train demand model → produce demand predictions

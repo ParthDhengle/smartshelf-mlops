@@ -1,7 +1,7 @@
 """
 SmartShelf — Prefect Weekly Training Flow
 ==========================================
-Replaces the legacy Airflow weekly_training_pipeline.py.
+Replaces the legacy weekly training pipeline.
 Handles the entire ML cycle natively in pure Python using Prefect.
 
 Usage:
