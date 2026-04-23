@@ -8,6 +8,7 @@ Production-ready API server with:
   - All ML prediction + data endpoints
 """
 
+import asyncio
 import logging
 import time
 
@@ -23,6 +24,7 @@ from smartshelf.api.dependencies import (
 )
 from smartshelf.api.routers import api_router
 from smartshelf.api.schemas.dashboard import HealthResponse
+from smartshelf.monitoring.metrics_collector import update_inventory_health_metrics
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger(__name__)
@@ -117,6 +119,28 @@ async def metrics():
 app.include_router(api_router, prefix="/api/v1")
 
 
+# ═════════════════════════════════════════════════════════════════════════════
+# BACKGROUND TASKS
+# ═════════════════════════════════════════════════════════════════════════════
+
+async def update_metrics_periodically():
+    """Update inventory health metrics every 5 minutes."""
+    while True:
+        try:
+            update_inventory_health_metrics()
+        except Exception as e:
+            logger.error(f"Error updating inventory metrics: {e}")
+        await asyncio.sleep(300)  # 5 minutes
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Start background tasks on app startup."""
+    asyncio.create_task(update_metrics_periodically())
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# ENTRYPOINT
 # ═════════════════════════════════════════════════════════════════════════════
 # ENTRYPOINT
 # ═════════════════════════════════════════════════════════════════════════════

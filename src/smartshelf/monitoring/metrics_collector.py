@@ -133,3 +133,42 @@ def record_prediction(model_name: str, endpoint: str, latency_seconds: float) ->
     """Record a prediction event for Prometheus."""
     PREDICTION_COUNT.labels(model_name=model_name, endpoint=endpoint).inc()
     PREDICTION_LATENCY.labels(model_name=model_name).observe(latency_seconds)
+
+
+def update_inventory_health_metrics() -> None:
+    """Compute and update inventory health metrics from database."""
+    from smartshelf.api.dependencies import get_db_engine
+    
+    engine = get_db_engine()
+    if engine is None:
+        return
+    
+    try:
+        # Calculate stockout rate
+        stockout_query = """
+        SELECT 
+            COUNT(CASE WHEN i.stock_on_hand = 0 THEN 1 END) * 100.0 / COUNT(*) as stockout_rate
+        FROM inventory i
+        WHERE i.stock_on_hand IS NOT NULL
+        """
+        
+        stockout_result = engine.execute(stockout_query).fetchone()
+        if stockout_result:
+            STOCKOUT_RATE.set(stockout_result[0] or 0)
+        
+        # Calculate reorder alerts (assuming reorder point is 10% of max stock for now)
+        reorder_query = """
+        SELECT COUNT(*) as reorder_alerts
+        FROM inventory i
+        WHERE i.stock_on_hand <= (i.max_stock_level * 0.1)
+          AND i.stock_on_hand > 0
+        """
+        
+        reorder_result = engine.execute(reorder_query).fetchone()
+        if reorder_result:
+            REORDER_ALERTS.set(reorder_result[0] or 0)
+            
+    except Exception as e:
+        # Log error but don't crash
+        import logging
+        logging.error(f"Failed to update inventory health metrics: {e}")

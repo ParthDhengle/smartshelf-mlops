@@ -2,6 +2,7 @@ import pandas as pd
 from fastapi import APIRouter
 from smartshelf.api.dependencies import get_db_engine, clear_model_cache
 from smartshelf.api.schemas import KPIResponse, StoreSummary
+from smartshelf.monitoring.drift_detector import run_drift_detection
 
 router = APIRouter()
 
@@ -48,6 +49,23 @@ async def get_kpis():
     except Exception:
         pass
     return KPIResponse(**metrics)
+
+
+@router.post("/admin/refresh-models")
+async def refresh_models():
+    """Clear model cache to force reload from MLflow."""
+    clear_model_cache()
+    return {"status": "success", "message": "Model cache cleared — models will be reloaded on next request"}
+
+
+@router.get("/admin/drift-check")
+async def run_drift_check():
+    """Manually trigger drift detection for testing."""
+    try:
+        report = run_drift_detection()
+        return {"status": "success", "report": report}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 @router.post("/admin/clear-cache")
 async def admin_clear_cache():

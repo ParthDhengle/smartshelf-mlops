@@ -129,6 +129,8 @@ def run_drift_detection(
             "drifted_features": [list of drifted feature names],
         }
     """
+    from smartshelf.monitoring.metrics_collector import update_drift_metrics
+    
     timestamp = datetime.now().isoformat()
 
     # Load data if not provided
@@ -205,6 +207,9 @@ def run_drift_detection(
     with open(report_path, "w") as f:
         json.dump(report, f, indent=2, default=str)
     logger.info(f"Drift report saved → {report_path}")
+
+    # Update Prometheus metrics
+    update_drift_metrics(report)
 
     if overall_drift:
         logger.warning(

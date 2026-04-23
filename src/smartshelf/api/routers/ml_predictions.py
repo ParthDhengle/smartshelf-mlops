@@ -1,4 +1,5 @@
 import logging
+import time
 from datetime import date, timedelta
 import numpy as np
 import pandas as pd
@@ -14,6 +15,7 @@ from smartshelf.api.schemas import (
     InventoryRequest, InventoryResponse,
     FullPipelineRequest, FullPipelineResponse
 )
+from smartshelf.monitoring.metrics_collector import record_prediction
 # Reusing the feature building function from the old routes.py 
 # We'll just define it or import. Here we move the function logic locally:
 
@@ -155,6 +157,8 @@ router = APIRouter()
 
 @router.post("/predict-demand", response_model=DemandResponse)
 async def predict_demand(req: DemandRequest):
+    start_time = time.time()
+    
     model = get_demand_model()
     if model is None:
         raise HTTPException(503, "Demand model not available.")
@@ -174,11 +178,17 @@ async def predict_demand(req: DemandRequest):
         ))
         current += timedelta(days=1)
 
+    # Record metrics
+    latency = time.time() - start_time
+    record_prediction("demand_model", "/predict-demand", latency)
+
     return DemandResponse(product_id=req.product_id, store_id=req.store_id, forecasts=forecasts, total_predicted=round(total, 2))
 
 
 @router.post("/optimize-price", response_model=PriceResponse)
 async def optimize_price(req: PriceRequest):
+    start_time = time.time()
+    
     model = get_price_model()
     if model is None:
         raise HTTPException(503, "Price model not available.")
@@ -212,10 +222,16 @@ async def optimize_price(req: PriceRequest):
     p_curr = (current_price - cost) * max(float(model.predict(features)[0]), 0)
     uplift = ((best_profit - p_curr) / (p_curr + 1e-8)) * 100
 
+    # Record metrics
+    latency = time.time() - start_time
+    record_prediction("price_model", "/optimize-price", latency)
+
     return PriceResponse(product_id=req.product_id, store_id=req.store_id, current_price=round(current_price, 2), optimal_price=round(best_price, 2), expected_demand=round(best_demand, 2), expected_profit=round(best_profit, 2), profit_uplift_pct=round(uplift, 1))
 
 @router.post("/optimize-inventory", response_model=InventoryResponse)
 async def optimize_inventory(req: InventoryRequest):
+    start_time = time.time()
+    
     model = get_inventory_model()
     if model is None: raise HTTPException(503, "Inventory model not available.")
 
@@ -248,6 +264,10 @@ async def optimize_inventory(req: InventoryRequest):
     inv = get_current_inventory(req.product_id, req.store_id)
     current_stock = inv["stock_on_hand"] if inv else None
     dos = round(current_stock / (daily_d + 0.01), 1) if current_stock else None
+
+    # Record metrics
+    latency = time.time() - start_time
+    record_prediction("inventory_model", "/optimize-inventory", latency)
 
     return InventoryResponse(product_id=req.product_id, store_id=req.store_id, reorder_point=reorder, safety_stock=safety, order_qty=eoq, predicted_daily_demand=round(daily_d, 2), current_stock=current_stock, days_of_stock_left=dos)
 
