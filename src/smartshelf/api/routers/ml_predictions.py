@@ -215,7 +215,7 @@ async def optimize_price(req: PriceRequest):
     best_price = current_price
     best_demand = 0
 
-    for price in np.linspace(max(cost * 0.8, 1.0), current_price * 2.5, 30):
+    for price in np.linspace(max(current_price * 0.75, cost * 1.05), current_price * 1.25, 30):
         f = features.copy()
         f["selling_price"] = price
         f["effective_price"] = price * (1 - f["discount_pct"].iloc[0] / 100)

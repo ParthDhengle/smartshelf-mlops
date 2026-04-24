@@ -22,14 +22,12 @@ async def optimize_store(req: StoreOptimizationRequest):
     """
     engine = get_db_engine()
     
-    # 1. Fetch products active in this store
-    # Limit to 30 for demo speed so the endpoint doesn't hang taking 5 mins
+    # 1. Fetch ALL active products in this store's inventory
     query = f"""
         SELECT p.product_id, p.product_name 
         FROM products p
         JOIN inventory i ON p.product_id = i.product_id
         WHERE i.store_id = {req.store_id}
-        LIMIT 30
     """
     try:
         products_df = pd.read_sql(query, engine)

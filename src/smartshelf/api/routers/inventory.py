@@ -6,13 +6,19 @@ from smartshelf.api.schemas import InventoryTransactionCreate
 router = APIRouter()
 
 @router.get("/inventory")
-async def get_inventory(limit: int = 100):
+async def get_inventory(store_id: int = 1, limit: int = 500):
     engine = get_db_engine()
     df = pd.read_sql(f"""
-        SELECT i.*, COALESCE(p.product_name, 'Unknown') as product_name
+        SELECT i.*, 
+               COALESCE(p.product_name, 'Unknown') as product_name,
+               p.base_sell_price,
+               p.base_cost_price,
+               p.perishable,
+               p.shelf_life_days
         FROM inventory i
         LEFT JOIN products p ON i.product_id = p.product_id
-        ORDER BY i.stock_on_hand ASC, i.store_id, i.product_id
+        WHERE i.store_id = {store_id}
+        ORDER BY i.stock_on_hand ASC, i.product_id
         LIMIT {limit}
     """, engine)
     import numpy as np

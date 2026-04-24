@@ -149,8 +149,8 @@ def find_optimal_prices(model, X: pd.DataFrame,
         cost = cost_prices[i]
         base_p = base_prices[i]
 
-        # Search between 80% of cost and 250% of base price
-        price_range = np.linspace(max(cost * 0.8, 1.0), base_p * 2.5, n_steps)
+        # Search between -25% and +25% of current price (realistic retail range)
+        price_range = np.linspace(max(base_p * 0.75, cost * 1.05), base_p * 1.25, n_steps)
         best_profit = -np.inf
         best_price = base_p
         best_demand = 0

@@ -77,7 +77,7 @@ export const simulateSale = (data: any) =>
 
 // ── Admin & Sync ─────────────────────────────────────────────────────────
 export const clearModelCache = () =>
-  apiFetch("/api/v1/admin/clear-cache", { method: "POST" });
+  apiFetch("/api/v1/admin/refresh-models", { method: "POST" });
 
 export const syncWeather = (storeId: number) =>
   apiFetch("/api/v1/sync/weather", { method: "POST", body: JSON.stringify({ store_id: storeId, days_to_sync: 7 }) });
@@ -93,7 +93,7 @@ export const getHealth = () => apiFetch("/health");
 // ── Inventory / Suppliers ────────────────────────────────────────────────
 export const getSuppliers = () => apiFetch("/api/v1/suppliers");
 
-export const getInventoryList = () => apiFetch("/api/v1/inventory?limit=300");
+export const getInventoryList = (storeId: number = 1) => apiFetch(`/api/v1/inventory?store_id=${storeId}&limit=500`);
 
 // ── Model Registry (live from MLflow) ────────────────────────────────────
 export const getModelRegistry = () => apiFetch("/api/v1/admin/model-registry");
